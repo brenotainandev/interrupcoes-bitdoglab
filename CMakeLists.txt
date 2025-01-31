@@ -44,9 +44,16 @@ pico_set_program_version(interrupcoes-bitdoglab "0.1")
 pico_enable_stdio_uart(interrupcoes-bitdoglab 1)
 pico_enable_stdio_usb(interrupcoes-bitdoglab 1)
 
+pico_generate_pio_header(interrupcoes-bitdoglab ${CMAKE_CURRENT_LIST_DIR}/interrupcoes_bitdoglab.pio)
+
+target_sources(interrupcoes-bitdoglab PRIVATE interrupcoes-bitdoglab.c)
+
 # Add the standard library to the build
 target_link_libraries(interrupcoes-bitdoglab
-        pico_stdlib)
+        pico_stdlib
+        hardware_pio
+        hardware_adc
+        pico_bootrom)
 
 # Add the standard include files to the build
 target_include_directories(interrupcoes-bitdoglab PRIVATE
@@ -59,4 +66,3 @@ target_link_libraries(interrupcoes-bitdoglab
         )
 
 pico_add_extra_outputs(interrupcoes-bitdoglab)
-
