@@ -35,7 +35,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(interrupcoes-bitdoglab interrupcoes-bitdoglab.c src/matriz-led.c src/led-rgb.c src/botao.c) 
+add_executable(interrupcoes-bitdoglab interrupcoes-bitdoglab.c src/matriz-led.c src/led-rgb.c src/botao.c src/animacoes.c) 
 
 pico_set_program_name(interrupcoes-bitdoglab "interrupcoes-bitdoglab")
 pico_set_program_version(interrupcoes-bitdoglab "0.1")
