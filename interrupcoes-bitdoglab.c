@@ -28,44 +28,32 @@ int main() {
     struct repeating_timer timer;
     add_repeating_timer_ms(200, piscar_led_rgb_vermelho, NULL, &timer); // Pisca 5x por segundo
 
+    int ultimo_contador = -1; // Guarda o último número exibido
+
     // Loop principal
     while (true) {
-        printf("Número exibido: %d\n", contador);
+        if (contador != ultimo_contador) { // Só atualiza se o contador mudar
+            printf("Número exibido: %d\n", contador);
+            ultimo_contador = contador;
 
-        switch (contador)
-        {
-            case 0:
-                animacao_numero_zero(pio, sm);
-                break;
-            case 1:
-                animacao_numero_um(pio, sm);
-                break;
-            case 2:
-                animacao_numero_dois(pio, sm);
-                break;
-            case 3:
-                animacao_numero_tres(pio, sm);
-                break;
-            case 4:
-                animacao_numero_quatro(pio, sm);
-                break;
-            case 5:
-                animacao_numero_cinco(pio, sm);
-                break;
-            case 6:
-                animacao_numero_seis(pio, sm);
-                break;
-            case 7:
-                animacao_numero_sete(pio, sm);
-                break;
-            case 8:
-                animacao_numero_oito(pio, sm);
-                break;
-            case 9:
-                animacao_numero_nove(pio, sm);
-                break;
-            default:
+            void (*animacao[]) (PIO, uint) = {
+                animacao_numero_zero,
+                animacao_numero_um,
+                animacao_numero_dois,
+                animacao_numero_tres,
+                animacao_numero_quatro,
+                animacao_numero_cinco,
+                animacao_numero_seis,
+                animacao_numero_sete,
+                animacao_numero_oito,
+                animacao_numero_nove
+            };
+
+            if (contador >= 0 && contador <= 9) {
+                animacao[contador](pio, sm);
+            } else {
                 printf("Nenhuma animação disponível para o número %d\n", contador);
+            }
         }
 
         sleep_ms(500);
